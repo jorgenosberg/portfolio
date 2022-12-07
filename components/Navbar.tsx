@@ -1,23 +1,25 @@
 import React from "react";
 import Link from "next/link";
 
-const Navbar = () => {
+export interface NavbarProps {
+  logo: string;
+  elements: { href: string; text: string }[];
+}
+
+const Navbar: React.FC<NavbarProps> = (
+  props: NavbarProps
+): React.ReactElement => {
   return (
-    <div>
-      <h1>Jørgen</h1>
-      <ul className="absolute top-0 right-0 flex-column">
-        <li>
-          <Link href="/home">Home</Link>
-        </li>
-        <li>
-          <Link href="/about">About</Link>
-        </li>
-        <li>
-          <Link href="/projects">Projects</Link>
-        </li>
-        <li>
-          <Link href="/contact">Contact</Link>
-        </li>
+    <div className="absolute flex flex-column top-0 right-0 p-10 gap-10">
+      <h1>{props.logo}</h1>
+      <ul className="flex flex-column justify-around content-around gap-10">
+        {props.elements.map((element: { href: string; text: string }) => {
+          return (
+            <li>
+              <Link href={element.href}>{element.text}</Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
